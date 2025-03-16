@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./src/template.hbs">
     <title>Document</title>
-</head>
-<body>
-    <h1>hello</h1>
-</body>
+  </head>
+  <body>
+    <!-- 1 -->
+    <div class="container" id="bookmarkApp">
+      <h1>Закладки</h1>
+      <input type="text" id="bookmarkInput" placeholder="URL" />
+      <button id="addBookmarkBtn">Додати</button>
+      <ul id="bookmarkList"></ul>
+    </div>
+<!-- 2 -->
+    <div class="container" id="formApp">
+      <h1>Форма</h1>
+      <input type="text" id="username" placeholder="Логін" />
+      <input type="password" id="password" placeholder="Пароль" />
+      <button id="saveBtn">Зберегти</button>
+    </div>
+
+    <input type="text" id="search" placeholder="Search">
+    <div id="product-list"></div>
+    
+    
+    <script src="./main.js" type="module"></script>
+  </body>
 </html>

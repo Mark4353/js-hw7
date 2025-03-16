@@ -1,4 +1,84 @@
-export const products = [
+document.addEventListener("DOMContentLoaded", function () {
+  const bookmarkInput = document.getElementById("bookmarkInput");
+  const addBookmarkBtn = document.getElementById("addBookmarkBtn");
+  const bookmarkList = document.getElementById("bookmarkList");
+
+  function loadBookmarks() {
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    bookmarkList.innerHTML = "";
+
+    bookmarks.forEach((bookmark, index) => {
+      const li = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = bookmark;
+      link.textContent = bookmark;
+      link.target = "_blank";
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "✖";
+      deleteBtn.classList.add("delete");
+      deleteBtn.onclick = function () {
+        bookmarks.splice(index, 1);
+        saveBookmarks(bookmarks);
+      };
+
+      li.appendChild(link);
+      li.appendChild(deleteBtn);
+      bookmarkList.appendChild(li);
+    });
+  }
+
+  function saveBookmarks(bookmarks) {
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    loadBookmarks();
+  }
+
+  addBookmarkBtn.addEventListener("click", function () {
+    const url = bookmarkInput.value.trim();
+    if (url) {
+      const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+      bookmarks.push(url);
+      saveBookmarks(bookmarks);
+
+      bookmarkInput.value = "";
+    }
+  });
+
+  loadBookmarks();
+});
+
+// 2
+
+document.addEventListener("DOMContentLoaded", function() {
+   const usernameInput = document.getElementById("username");
+   const passwordInput = document.getElementById("password") ;
+    const saveBtn =document.getElementById("saveBtn");
+
+  function loadFormData( ) {
+    const savedUsername =localStorage.getItem("username");
+    const savedPassword =localStorage.getItem("password");
+
+    if (savedUsername){
+    usernameInput.value = savedUsername;
+    }
+      if (savedPassword){
+      passwordInput.value = savedPassword;
+    }
+  }
+
+  function saveFormData() {
+     localStorage.setItem("username", usernameInput.value);
+     localStorage.setItem("password",  passwordInput.value) ;
+
+  }
+
+  saveBtn.addEventListener("click", saveFormData);
+
+  loadFormData() ;
+}) ;
+
+// 3
+
+const products = [
     {
       id: 1,
       name: 'Laptop',
@@ -18,3 +98,4 @@ export const products = [
       description: 'Noise-cancelling headphones for better focus.',
     },
   ];
+
