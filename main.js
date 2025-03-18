@@ -103,22 +103,30 @@ const fs = require("fs");
 
 const templateSource = fs.readFileSync("src/template.hbs", "utf8");
 const template = Handlebars.compile(templateSource);
+function renderProducts() {
+  document.getElementById("product-list").innerHTML = template({ products });
 
-function renderProducts(productsToRender) {
-  return productsToRender.map((product) => template(product)).join("");
+  document.querySelectorAll(".product-item").forEach((item) => {
+    item.style.display= "none";
+  });
 }
+document.addEventListener("DOMContentLoaded", ()=> {
+  renderProducts( );
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("product-list").innerHTML = renderProducts(products);
-   document.getElementById("search").addEventListener("input", function () {
-    
-    const searchTerm = this.value.toLowerCase() ;
+  const searchInput = document.getElementById("search");
+  const searchButton = document.getElementById("search-btn");
 
-    const filteredProducts = products.filter((product) =>
-      product.name.toLowerCase().includes(searchTerm)
-    );
+  searchButton.addEventListener("click", function ( ) {
+    const searchTerm = searchInput.value.toLowerCase();
 
-    document.getElementById("product-list").innerHTML =
-      renderProducts(filteredProducts);
+    document.querySelectorAll(".product-item").forEach((item) => {
+      const productName = item.getAttribute("data-name").toLowerCase();
+
+      if (productName.includes(searchTerm)) {
+        item.style.display = "block" ;
+      }else {
+        item.style.display = "none";
+      }
+    });
   });
 }) ;

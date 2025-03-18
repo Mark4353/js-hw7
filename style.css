@@ -131,5 +131,5 @@ button.delete:hover {
     width: 100px;
     height: 50px;
     outline: solid black;
-    
+     display: none; 
 }
