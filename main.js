@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
       link.textContent = bookmark;
       link.target = "_blank";
       const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "✖";
+      deleteBtn.textContent = "X";
       deleteBtn.classList.add("delete");
       deleteBtn.onclick = function () {
         bookmarks.splice(index, 1);
@@ -97,36 +97,3 @@ const products = [
     description: "Noise-cancelling headphones for better focus.",
   },
 ];
-
-const Handlebars = require("handlebars");
-const fs = require("fs");
-
-const templateSource = fs.readFileSync("src/template.hbs", "utf8");
-const template = Handlebars.compile(templateSource);
-function renderProducts() {
-  document.getElementById("product-list").innerHTML = template({ products });
-
-  document.querySelectorAll(".product-item").forEach((item) => {
-    item.style.display= "none";
-  });
-}
-document.addEventListener("DOMContentLoaded", ()=> {
-  renderProducts( );
-
-  const searchInput = document.getElementById("search");
-  const searchButton = document.getElementById("search-btn");
-
-  searchButton.addEventListener("click", function ( ) {
-    const searchTerm = searchInput.value.toLowerCase();
-
-    document.querySelectorAll(".product-item").forEach((item) => {
-      const productName = item.getAttribute("data-name").toLowerCase();
-
-      if (productName.includes(searchTerm)) {
-        item.style.display = "block" ;
-      }else {
-        item.style.display = "none";
-      }
-    });
-  });
-}) ;
