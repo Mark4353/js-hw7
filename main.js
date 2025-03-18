@@ -48,54 +48,77 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // 2
 
-document.addEventListener("DOMContentLoaded", function() {
-   const usernameInput = document.getElementById("username");
-   const passwordInput = document.getElementById("password") ;
-    const saveBtn =document.getElementById("saveBtn");
+document.addEventListener("DOMContentLoaded", function () {
+  const usernameInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
+  const saveBtn = document.getElementById("saveBtn");
 
-  function loadFormData( ) {
-    const savedUsername =localStorage.getItem("username");
-    const savedPassword =localStorage.getItem("password");
+  function loadFormData() {
+    const savedUsername = localStorage.getItem("username");
+    const savedPassword = localStorage.getItem("password");
 
-    if (savedUsername){
-    usernameInput.value = savedUsername;
+    if (savedUsername) {
+      usernameInput.value = savedUsername;
     }
-      if (savedPassword){
+    if (savedPassword) {
       passwordInput.value = savedPassword;
     }
   }
 
   function saveFormData() {
-     localStorage.setItem("username", usernameInput.value);
-     localStorage.setItem("password",  passwordInput.value) ;
-
+    localStorage.setItem("username", usernameInput.value);
+    localStorage.setItem("password", passwordInput.value);
   }
 
   saveBtn.addEventListener("click", saveFormData);
 
-  loadFormData() ;
-}) ;
+  loadFormData();
+});
 
 // 3
 
 const products = [
-    {
-      id: 1,
-      name: 'Laptop',
-      price: 1500,
-      description: 'A high-performance laptop for all your needs.',
-    },
-    {
-      id: 2,
-      name: 'Smartphone',
-      price: 700,
-      description: 'A modern smartphone with an excellent camera.',
-    },
-    {
-      id: 3,
-      name: 'Headphones',
-      price: 200,
-      description: 'Noise-cancelling headphones for better focus.',
-    },
-  ];
+  {
+    id: 1,
+    name: "Laptop",
+    price: 1500,
+    description: "A high-performance laptop for all your needs.",
+  },
+  {
+    id: 2,
+    name: "Smartphone",
+    price: 700,
+    description: "A modern smartphone with an excellent camera.",
+  },
+  {
+    id: 3,
+    name: "Headphones",
+    price: 200,
+    description: "Noise-cancelling headphones for better focus.",
+  },
+];
 
+const Handlebars = require("handlebars");
+const fs = require("fs");
+
+const templateSource = fs.readFileSync("src/template.hbs", "utf8");
+const template = Handlebars.compile(templateSource);
+
+function renderProducts(productsToRender) {
+  return productsToRender.map((product) => template(product)).join("");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("product-list").innerHTML = renderProducts(products);
+   document.getElementById("search").addEventListener("input", function () {
+    
+    const searchTerm = this.value.toLowerCase() ;
+
+    const filteredProducts = products.filter((product) =>
+      product.name.toLowerCase().includes(searchTerm)
+    );
+
+    document.getElementById("product-list").innerHTML =
+      renderProducts(filteredProducts);
+  });
+}) ;
